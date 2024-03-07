@@ -1,6 +1,7 @@
+import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from '../constants';
 import { Action, type State } from '../types.d';
 
-const initialState: State = {
+export const initialState: State = {
   fromLanguage: 'auto',
   toLanguage: 'en',
   fromText: '',
@@ -12,6 +13,7 @@ export const translate = (state: State, action: Action): State => {
   const { type } = action;
 
   if (type === 'INTERCHANGE_LANGUAGES') {
+    if (state.fromLanguage === AUTO_LANGUAGE) return state;
     return {
       ...state,
       fromLanguage: state.toLanguage,
