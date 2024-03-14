@@ -1,4 +1,4 @@
-import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from '../constants';
+import { AUTO_LANGUAGE } from '../constants';
 import { Action, type State } from '../types.d';
 
 export const initialState: State = {
@@ -27,15 +27,19 @@ export const translate = (state: State, action: Action): State => {
     };
   }
   if (type === 'SET_TO_LANGUAGE') {
+    if (state.toLanguage === action.payload) return state;
+    const loading = state.fromText !== '';
     return {
       ...state,
       toLanguage: action.payload,
+      loading,
     };
   }
   if (type === 'SET_FROM_TEXT') {
+    const loading = action.payload !== '';
     return {
       ...state,
-      loading: true,
+      loading,
       fromText: action.payload,
       result: '',
     };
